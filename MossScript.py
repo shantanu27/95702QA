@@ -36,42 +36,42 @@ def execute(submission, basefiles=None, task=None):
 
         dir_list = extract_code_files(submission, task)
 
-        # Execute mos
-        # m = mosspy.Moss(userid, "java")
-        # m.setDirectoryMode(mode=1)
+        Execute mos
+        m = mosspy.Moss(userid, "java")
+        m.setDirectoryMode(mode=1)
 
-        # print("\nSetting MOSS parameters")
+        print("\nSetting MOSS parameters")
 
-        # if basefiles is not None:
-           #  for file in basefiles:
-           #      m.addBaseFile(file)
+        if basefiles is not None:
+            for file in basefiles:
+                m.addBaseFile(file)
 
-        # m.addFilesByWildcard("submissions/*/*")
+        m.addFilesByWildcard("submissions/*/*")
 
-        # print("Sending to MOSS server")
-        # print("Waiting for response from MOSS server")
+        print("Sending to MOSS server")
+        print("Waiting for response from MOSS server")
 
-        # url = m.send()
-        # print("Report URL: {}".format(url))
+        url = m.send()
+        print("Report URL: {}".format(url))
 
-        # print("Result received. Saving to {}".format("report_{}.html".format(task)))
-        # m.saveWebPage(url, "report_{}.html".format(task))
+        print("Result received. Saving to {}".format("report_{}.html".format(task)))
+        m.saveWebPage(url, "report_{}.html".format(task))
 
-        # report_dir = "report_{}".format(task)
+        report_dir = "report_{}".format(task)
 
-        # if os.path.isdir(report_dir):
-        #     shutil.rmtree(report_dir)
+        if os.path.isdir(report_dir):
+            shutil.rmtree(report_dir)
 
-        # print("Downloading whole report locally for {}".format(task))
-        # mosspy.download_report(url, "report_{}/".format(task), connections=8, log_level=logging.ERROR)
+        print("Downloading whole report locally for {}".format(task))
+        mosspy.download_report(url, "report_{}/".format(task), connections=8, log_level=logging.ERROR)
 
-        # print("\nDeleting directories")
-        # # Delete created files
-        # for directory in dir_list:
-        #     if os.path.isdir(directory):
-        #         shutil.rmtree(directory)
+        print("\nDeleting directories")
+        # Delete created files
+        for directory in dir_list:
+            if os.path.isdir(directory):
+                shutil.rmtree(directory)
 
-        # print("Finished")
+        print("Finished")
     except BaseException as e:
         print("Exception thrown! {}".format(str(e)))
         print("Deleting dirs")
