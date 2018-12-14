@@ -18,13 +18,13 @@ userid = 411763981
 
 def execute(submission, basefiles=None, task=None):
     """
-	This method is the main driver function. It does the following steps:
-	1. Extracts code files from submission zip file. Currently, it works for java files. 
-	2. Adds basefiles if specified
-	3. Sends the folders to moss server
-	4. Once report is generated, provides the url and also downloads it locally
-	5. Once everything is complete (or if there's an error in between), it cleans
-	   all the temporary folders that were created. 
+    This method is the main driver function. It does the following steps:
+    1. Extracts code files from submission zip file. Currently, it works for java files.
+    2. Adds basefiles if specified
+    3. Sends the folders to moss server
+    4. Once report is generated, provides the url and also downloads it locally
+    5. Once everything is complete (or if there's an error in between), it cleans
+       all the temporary folders that were created.
     :param submission: Name of the submission zip file
     :param basefiles: Base files, if any
     :param task: Name of the task. If nothing specified, it extracts all java files. 
@@ -37,41 +37,41 @@ def execute(submission, basefiles=None, task=None):
         dir_list = extract_code_files(submission, task)
 
         # Execute mos
-        m = mosspy.Moss(userid, "java")
-        m.setDirectoryMode(mode=1)
+        # m = mosspy.Moss(userid, "java")
+        # m.setDirectoryMode(mode=1)
 
-        print("\nSetting MOSS parameters")
+        # print("\nSetting MOSS parameters")
 
-        if basefiles is not None:
-	        for file in basefiles:
-	            m.addBaseFile(file)
+        # if basefiles is not None:
+           #  for file in basefiles:
+           #      m.addBaseFile(file)
 
-        m.addFilesByWildcard("submissions/*/*")
+        # m.addFilesByWildcard("submissions/*/*")
 
-        print("Sending to MOSS server")
-        print("Waiting for response from MOSS server")
+        # print("Sending to MOSS server")
+        # print("Waiting for response from MOSS server")
 
-        url = m.send()
-        print("Report URL: {}".format(url))
+        # url = m.send()
+        # print("Report URL: {}".format(url))
 
-        print("Result received. Saving to {}".format("report_{}.html".format(task)))
-        m.saveWebPage(url, "report_{}.html".format(task))
+        # print("Result received. Saving to {}".format("report_{}.html".format(task)))
+        # m.saveWebPage(url, "report_{}.html".format(task))
 
-        report_dir = "report_{}".format(task)
+        # report_dir = "report_{}".format(task)
 
-        if os.path.isdir(report_dir):
-            shutil.rmtree(report_dir)
+        # if os.path.isdir(report_dir):
+        #     shutil.rmtree(report_dir)
 
-        print("Downloading whole report locally for {}".format(task))
-        mosspy.download_report(url, "report_{}/".format(task), connections=8, log_level=logging.ERROR)
+        # print("Downloading whole report locally for {}".format(task))
+        # mosspy.download_report(url, "report_{}/".format(task), connections=8, log_level=logging.ERROR)
 
-        print("\nDeleting directories")
-        # Delete created files
-        for directory in dir_list:
-            if os.path.isdir(directory):
-                shutil.rmtree(directory)
+        # print("\nDeleting directories")
+        # # Delete created files
+        # for directory in dir_list:
+        #     if os.path.isdir(directory):
+        #         shutil.rmtree(directory)
 
-        print("Finished")
+        # print("Finished")
     except BaseException as e:
         print("Exception thrown! {}".format(str(e)))
         print("Deleting dirs")
@@ -83,35 +83,35 @@ def execute(submission, basefiles=None, task=None):
 
 
 def extract_code_files(submission_zip_path, task=None):
-	"""
-	This function prepares the directory structure needed for moss.
-	For project submissions on Canvas, it typically downloads as a single zip - submissions.zip
-	with the following structure
+    """
+    This function prepares the directory structure needed for moss.
+    For project submissions on Canvas, it typically downloads as a single zip - submissions.zip
+    with the following structure
 
-	submissions.zip
-		- <andrewid1_somecode>.zip
-		- <andrewid2_somecode>.zip
-		.
-		.. and so on
+    submissions.zip
+        - <andrewid1_somecode>.zip
+        - <andrewid2_somecode>.zip
+        .
+        .. and so on
 
-	The method goes through each of those zipped submissions and prepares the folder structure
-	inside the extract_zip method. The final folder structure is:
+    The method goes through each of those zipped submissions and prepares the folder structure
+    inside the extract_zip method. The final folder structure is:
 
-	submissions
-		- andrewid1
-			- file1.java
-			- file2.java
-			....
-		- andrewid2
-			- file1.java
-			- file2.java
-			....
-		....
+    submissions
+        - andrewid1
+            - file1.java
+            - file2.java
+            ....
+        - andrewid2
+            - file1.java
+            - file2.java
+            ....
+        ....
 
     :param submission_zip_path:
     :param task: name of the task to extract. If none, then extract all java files
     :return: Returns the list of directories created
-	"""
+    """
     dir_list = list()
     count = 0
 
