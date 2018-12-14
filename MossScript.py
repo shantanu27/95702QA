@@ -17,7 +17,7 @@ userid = 411763981
 
 
 def execute(submission, basefiles=None, task=None):
-	"""
+    """
 	This method is the main driver function. It does the following steps:
 	1. Extracts code files from submission zip file. Currently, it works for java files. 
 	2. Adds basefiles if specified
@@ -29,7 +29,7 @@ def execute(submission, basefiles=None, task=None):
     :param basefiles: Base files, if any
     :param task: Name of the task. If nothing specified, it extracts all java files. 
     :return:
-	"""
+    """
     dir_list = list()
     try:
         print("Extracting code files from submissions")
